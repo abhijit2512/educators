@@ -1,0 +1,200 @@
+// Educators - academic support platform
+// Database: MySQL (Hostinger). Override DATABASE_URL via env.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  STUDENT
+}
+
+enum EnquiryStatus {
+  NEW
+  QUOTED
+  PAID
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+}
+
+enum PaymentProvider {
+  STRIPE
+  PAYPAL
+  MANUAL
+}
+
+model User {
+  id           String          @id @default(cuid())
+  email        String          @unique
+  passwordHash String
+  name         String?
+  role         Role            @default(STUDENT)
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+
+  profile      StudentProfile?
+  enquiries    Enquiry[]
+  invoices     Invoice[]
+  files        UploadedFile[]
+  updates      RequestUpdate[]
+}
+
+model StudentProfile {
+  id         String  @id @default(cuid())
+  userId     String  @unique
+  phone      String?
+  country    String?
+  university String?
+  level      String?
+  user       User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Enquiry {
+  id                  String        @id @default(cuid())
+  userId              String?
+  name                String
+  email               String
+  phone               String?
+  country             String?
+  university          String?
+  serviceSlug         String
+  subject             String?
+  academicLevel       String?
+  deadline            DateTime?
+  wordCount           Int?
+  programmingLanguage String?
+  description         String        @db.Text
+  fileUrl             String?
+  consent             Boolean       @default(false)
+  integrityAck        Boolean       @default(false)
+  status              EnquiryStatus @default(NEW)
+  createdAt           DateTime      @default(now())
+  updatedAt           DateTime      @updatedAt
+
+  user     User?           @relation(fields: [userId], references: [id], onDelete: SetNull)
+  payments Payment[]
+  invoices Invoice[]
+  updates  RequestUpdate[]
+  files    UploadedFile[]
+
+  @@index([status])
+  @@index([createdAt])
+}
+
+model Service {
+  id        String   @id @default(cuid())
+  slug      String   @unique
+  title     String
+  summary   String   @db.Text
+  body      String   @db.Text
+  category  String?
+  icon      String?
+  visible   Boolean  @default(true)
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PricingPlan {
+  id        String   @id @default(cuid())
+  slug      String   @unique
+  title     String
+  summary   String   @db.Text
+  features  String   @db.Text // JSON stringified array
+  ctaLabel  String?
+  visible   Boolean  @default(true)
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SamplePaper {
+  id          String   @id @default(cuid())
+  title       String
+  subject     String?
+  description String   @db.Text
+  fileUrl     String?
+  externalUrl String?
+  visible     Boolean  @default(true)
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Payment {
+  id          String          @id @default(cuid())
+  enquiryId   String
+  amount      Decimal         @db.Decimal(10, 2)
+  currency    String          @default("GBP")
+  provider    PaymentProvider @default(MANUAL)
+  providerRef String?
+  status      PaymentStatus   @default(PENDING)
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+
+  enquiry Enquiry @relation(fields: [enquiryId], references: [id], onDelete: Cascade)
+
+  @@index([status])
+}
+
+model Invoice {
+  id        String        @id @default(cuid())
+  number    String        @unique
+  enquiryId String
+  userId    String?
+  amount    Decimal       @db.Decimal(10, 2)
+  currency  String        @default("GBP")
+  status    PaymentStatus @default(PENDING)
+  issuedAt  DateTime      @default(now())
+  dueAt     DateTime?
+  lineItems String        @db.Text // JSON stringified
+
+  enquiry Enquiry @relation(fields: [enquiryId], references: [id], onDelete: Cascade)
+  user    User?   @relation(fields: [userId], references: [id], onDelete: SetNull)
+}
+
+model SiteSetting {
+  key       String   @id
+  value     String   @db.Text
+  updatedAt DateTime @updatedAt
+}
+
+model RequestUpdate {
+  id         String   @id @default(cuid())
+  enquiryId  String
+  authorId   String?
+  authorRole Role     @default(ADMIN)
+  message    String   @db.Text
+  createdAt  DateTime @default(now())
+
+  enquiry Enquiry @relation(fields: [enquiryId], references: [id], onDelete: Cascade)
+  author  User?   @relation(fields: [authorId], references: [id], onDelete: SetNull)
+}
+
+model UploadedFile {
+  id        String   @id @default(cuid())
+  ownerId   String?
+  enquiryId String?
+  filename  String
+  mime      String
+  size      Int
+  url       String
+  createdAt DateTime @default(now())
+
+  owner   User?    @relation(fields: [ownerId], references: [id], onDelete: SetNull)
+  enquiry Enquiry? @relation(fields: [enquiryId], references: [id], onDelete: SetNull)
+}
