@@ -60,8 +60,8 @@ In the Node app screen, add these (matching `.env.example`):
 | Key | Value |
 |---|---|
 | `NODE_ENV` | `production` |
-| `NEXT_PUBLIC_SITE_URL` | `https://your-domain.com` |
-| `NEXTAUTH_URL` | `https://your-domain.com` |
+| `NEXT_PUBLIC_SITE_URL` | `https://educatorsunited.in` |
+| `NEXTAUTH_URL` | `https://educatorsunited.in` |
 | `NEXTAUTH_SECRET` | a long random string (`openssl rand -base64 32`) |
 | `DATABASE_URL` | the MySQL URL from step 1 |
 | `ADMIN_EMAIL` | your admin email |
@@ -92,7 +92,7 @@ In the Node app screen:
 - **Start command**: `npm start`
 - **Listen port**: the port Hostinger shows you (often automatic).
 
-Click **Start application**. Visit `https://your-domain.com` to confirm.
+Click **Start application**. Visit `https://educatorsunited.in` to confirm.
 
 ---
 
@@ -106,7 +106,7 @@ Click **Start application**. Visit `https://your-domain.com` to confirm.
 
 ## 8. First-time admin checks
 
-- Sign in at `https://your-domain.com/login` with your admin email and password.
+- Sign in at `https://educatorsunited.in/login` with your admin email and password.
 - Visit `/admin/settings` and update business name, contact details, hero text and footer text.
 - Visit `/admin/services` and `/admin/pricing` to fine-tune what you want to display.
 - Send a test enquiry from `/contact` to confirm email delivery (if SMTP configured).

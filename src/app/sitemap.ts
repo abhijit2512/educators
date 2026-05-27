@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base = process.env.NEXT_PUBLIC_SITE_URL || "https://your-domain.com";
+  const base = process.env.NEXT_PUBLIC_SITE_URL || "https://educatorsunited.in";
   const paths = [
     "", "/about", "/services", "/services/coding-and-programming",
     "/pricing", "/samples", "/how-it-works", "/contact", "/faq",

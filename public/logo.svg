@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" role="img" aria-label="Educators United Pvt Ltd">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1f3290"/>
+      <stop offset="100%" stop-color="#2238b4"/>
+    </linearGradient>
+  </defs>
+  <circle cx="320" cy="320" r="300" fill="url(#g)"/>
+  <circle cx="320" cy="320" r="232" fill="#ffffff"/>
+  <path d="M 320 130
+           L 343 200
+           L 416 200
+           L 357 244
+           L 380 314
+           L 320 270
+           L 260 314
+           L 283 244
+           L 224 200
+           L 297 200 Z"
+        fill="#f08a1c"/>
+  <text x="320" y="345" text-anchor="middle"
+        font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, sans-serif"
+        font-weight="800" font-size="96" fill="#1f3290" letter-spacing="2">EU</text>
+  <text x="320" y="408" text-anchor="middle"
+        font-family="ui-sans-serif, system-ui, sans-serif"
+        font-weight="600" font-size="28" fill="#1f3290" letter-spacing="6">PVT LTD</text>
+  <circle cx="68" cy="320" r="12" fill="#f08a1c"/>
+  <circle cx="572" cy="320" r="12" fill="#f08a1c"/>
+</svg>

@@ -39,7 +39,7 @@ environment screen (production).
 
 5. In Stripe Dashboard → **Developers → Webhooks**, add an endpoint:
    ```
-   https://your-domain.com/api/payments/stripe/webhook
+   https://educatorsunited.in/api/payments/stripe/webhook
    ```
    listening for `checkout.session.completed`. Copy the signing secret into
    `STRIPE_WEBHOOK_SECRET`.

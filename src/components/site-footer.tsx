@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { SiteSettings } from "@/lib/settings";
+import { SiteLogo } from "./site-logo";
 
 export function SiteFooter({ settings }: { settings: SiteSettings }) {
   const year = new Date().getFullYear();
@@ -7,11 +8,8 @@ export function SiteFooter({ settings }: { settings: SiteSettings }) {
     <footer className="mt-20 border-t border-slate-200 bg-white">
       <div className="container grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-4">
         <div>
-          <div className="mb-3 flex items-center gap-2 font-bold text-ink-900">
-            <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-brand-500 to-accent-500 text-white">
-              A
-            </span>
-            {settings.business_name}
+          <div className="mb-3">
+            <SiteLogo logoUrl={settings.logo_url} businessName={settings.business_name} size={36} />
           </div>
           <p className="text-sm text-slate-600">{settings.footer_text}</p>
         </div>

@@ -1,13 +1,13 @@
 import { prisma } from "./prisma";
 
 const FALLBACKS: Record<string, string> = {
-  business_name: process.env.BUSINESS_NAME ?? "Academic Support Brand",
-  business_email: process.env.BUSINESS_EMAIL ?? "hello@your-domain.com",
+  business_name: process.env.BUSINESS_NAME ?? "Educators United Pvt Ltd",
+  business_email: process.env.BUSINESS_EMAIL ?? "hello@educatorsunited.in",
   business_phone: process.env.BUSINESS_PHONE ?? "+44 0000 000000",
   business_whatsapp: process.env.BUSINESS_WHATSAPP ?? "+44 0000 000000",
-  business_facebook: process.env.BUSINESS_FACEBOOK ?? "https://facebook.com/your-page",
+  business_facebook: process.env.BUSINESS_FACEBOOK ?? "https://facebook.com/educatorsunited",
   business_address: "United Kingdom (worldwide online support)",
-  logo_url: "",
+  logo_url: process.env.BUSINESS_LOGO_URL ?? "/logo.png",
   hero_headline: "Ethical academic support for UK and international students",
   hero_subheading:
     "Tutoring, research-method coaching, coding guidance, proofreading and learning support — delivered by qualified subject mentors. We help you learn; you submit your own work.",

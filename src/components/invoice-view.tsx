@@ -32,7 +32,7 @@ export function InvoiceView({ invoice }: { invoice: Invoice }) {
       <div className="card">
         <div className="flex items-start justify-between">
           <div>
-            <div className="text-lg font-bold">{business?.business_name || "Academic Support Brand"}</div>
+            <div className="text-lg font-bold">{business?.business_name || "Educators United Pvt Ltd"}</div>
             <div className="text-xs text-slate-500">{business?.business_email}</div>
             <div className="text-xs text-slate-500">{business?.business_phone}</div>
             <div className="text-xs text-slate-500">{business?.business_address}</div>

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useSession, signOut } from "next-auth/react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { SiteSettings } from "@/lib/settings";
+import { SiteLogo } from "./site-logo";
 
 const NAV = [
   { href: "/services", label: "Services" },
@@ -22,12 +23,7 @@ export function SiteHeader({ settings }: { settings: SiteSettings }) {
   return (
     <header className="sticky top-0 z-40 border-b border-slate-200/80 bg-white/90 backdrop-blur">
       <div className="container flex h-16 items-center justify-between gap-3">
-        <Link href="/" className="flex items-center gap-2 font-bold text-ink-900">
-          <span className="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-brand-500 to-accent-500 text-white">
-            A
-          </span>
-          <span className="hidden sm:inline">{settings.business_name}</span>
-        </Link>
+        <SiteLogo logoUrl={settings.logo_url} businessName={settings.business_name} size={40} />
 
         <nav className="hidden items-center gap-1 lg:flex">
           {NAV.map((n) => (
