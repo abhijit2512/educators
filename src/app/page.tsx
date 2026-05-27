@@ -97,7 +97,7 @@ export default async function HomePage() {
           <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {(services.length ? services : FALLBACK_SERVICES).map((svc, i) => (
               <Reveal key={svc.slug} delay={i * 0.04}>
-                <Link href={`/services#${svc.slug}`} className="group card h-full transition hover:-translate-y-1 hover:shadow-glow">
+                <Link href={`/services/${svc.slug}`} className="group card h-full transition hover:-translate-y-1 hover:shadow-glow">
                   <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-brand-50 text-brand-700">
                     {iconFor(svc.category)}
                   </div>

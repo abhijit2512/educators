@@ -56,11 +56,18 @@ export default async function ServicesPage() {
                         <div className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-brand-50 text-brand-700">
                           {iconFor(s.category)}
                         </div>
-                        <h3 className="text-base font-semibold">{s.title}</h3>
+                        <h3 className="text-base font-semibold">
+                          <Link href={`/services/${s.slug}`} className="hover:text-brand-700">
+                            {s.title}
+                          </Link>
+                        </h3>
                         <p className="mt-1.5 text-sm text-slate-600 line-clamp-4">{s.summary}</p>
-                        <div className="mt-4 flex gap-2 text-sm">
-                          <Link href={`/contact?service=${encodeURIComponent(s.slug)}`} className="font-medium text-brand-700 hover:underline">
-                            Request a Quote →
+                        <div className="mt-4 flex justify-between gap-2 text-sm">
+                          <Link href={`/services/${s.slug}`} className="font-medium text-brand-700 hover:underline">
+                            Learn more →
+                          </Link>
+                          <Link href={`/contact?service=${encodeURIComponent(s.slug)}`} className="font-medium text-slate-600 hover:underline">
+                            Request quote
                           </Link>
                         </div>
                       </article>

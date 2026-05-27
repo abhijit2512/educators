@@ -37,9 +37,25 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const settings = await getSiteSettings();
+  const site = process.env.NEXT_PUBLIC_SITE_URL || "https://educatorsunited.in";
+  const orgJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "EducationalOrganization",
+    name: settings.business_name,
+    url: site,
+    logo: settings.logo_url?.startsWith("http") ? settings.logo_url : `${site}${settings.logo_url || "/logo.png"}`,
+    email: settings.business_email,
+    telephone: settings.business_phone,
+    sameAs: [settings.business_facebook].filter(Boolean),
+    areaServed: ["United Kingdom", "Worldwide"],
+  };
   return (
     <html lang="en">
       <body className="min-h-screen antialiased">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
+        />
         <Providers>
           <SiteHeader settings={settings} />
           <main className="min-h-[60vh]">{children}</main>
