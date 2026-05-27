@@ -4,6 +4,7 @@ import { getSiteSettings } from "@/lib/settings";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { FloatingCTA } from "@/components/floating-cta";
+import { CookieConsent } from "@/components/cookie-consent";
 import { Providers } from "./providers";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -44,6 +45,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <main className="min-h-[60vh]">{children}</main>
           <SiteFooter settings={settings} />
           <FloatingCTA />
+          <CookieConsent />
         </Providers>
       </body>
     </html>

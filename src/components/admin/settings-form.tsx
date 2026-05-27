@@ -1,6 +1,54 @@
 "use client";
 import { useState } from "react";
 
+function TestEmailButton() {
+  const [state, setState] = useState<"idle" | "sending" | "ok" | "warn" | "err">("idle");
+  const [message, setMessage] = useState("");
+
+  async function send() {
+    setState("sending");
+    setMessage("");
+    const res = await fetch("/api/admin/test-email", { method: "POST" });
+    const j = await res.json().catch(() => ({}));
+    if (j.ok) {
+      setState("ok");
+      setMessage(`Sent to ${j.to}. Check that inbox.`);
+    } else if (j.configured === false) {
+      setState("warn");
+      setMessage(j.message);
+    } else {
+      setState("err");
+      setMessage(j.message || "Could not send. Check server logs.");
+    }
+  }
+
+  return (
+    <div className="rounded-2xl bg-slate-50 p-4 ring-1 ring-slate-100">
+      <div className="flex items-center justify-between gap-3">
+        <div>
+          <p className="text-sm font-semibold text-ink-900">Test email delivery</p>
+          <p className="mt-1 text-xs text-slate-600">
+            Sends a test email to your ADMIN_EMAIL using the configured SMTP settings.
+          </p>
+        </div>
+        <button type="button" onClick={send} disabled={state === "sending"} className="btn-ghost text-sm">
+          {state === "sending" ? "Sending…" : "Send test"}
+        </button>
+      </div>
+      {message && (
+        <p
+          className={
+            "mt-2 text-sm " +
+            (state === "ok" ? "text-emerald-700" : state === "warn" ? "text-amber-700" : "text-red-700")
+          }
+        >
+          {message}
+        </p>
+      )}
+    </div>
+  );
+}
+
 const FIELDS: Array<{ key: string; label: string; type?: "text" | "textarea" | "url" }> = [
   { key: "business_name", label: "Business name" },
   { key: "logo_url", label: "Logo URL", type: "url" },
@@ -48,6 +96,9 @@ export function SettingsForm({ initial }: { initial: Record<string, string> }) {
         {status === "saving" ? "Saving…" : status === "ok" ? "Saved ✓" : "Save settings"}
       </button>
       {status === "err" && <p className="text-sm text-red-700">Could not save.</p>}
+
+      <hr className="my-6 border-slate-100" />
+      <TestEmailButton />
     </form>
   );
 }

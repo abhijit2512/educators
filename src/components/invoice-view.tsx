@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import { PayInvoiceButton } from "./pay-invoice-button";
 
 type Invoice = {
   id: string;
@@ -71,6 +72,15 @@ export function InvoiceView({ invoice }: { invoice: Invoice }) {
           This invoice is for academic coaching and learning-support services. All
           support is provided for tutoring, guidance and reference only.
         </p>
+      </div>
+
+      <div className="mt-6 print:hidden">
+        <PayInvoiceButton
+          invoiceId={invoice.id}
+          amount={invoice.amount.toString()}
+          currency={invoice.currency}
+          status={invoice.status}
+        />
       </div>
     </div>
   );
