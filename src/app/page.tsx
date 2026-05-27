@@ -198,6 +198,59 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* Testimonials (clearly marked as placeholder copy) */}
+      <section className="section">
+        <div className="container">
+          <div className="mx-auto max-w-2xl text-center">
+            <span className="eyebrow">Student voices</span>
+            <h2 className="h2 mt-2">What students say about our mentoring</h2>
+            <p className="mt-3 text-xs uppercase tracking-wider text-slate-500">
+              Sample copy — replace with real student feedback in the admin panel
+            </p>
+          </div>
+          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {[
+              {
+                quote: "My mentor walked me through SPSS regression step by step. I finally understood what the numbers meant — and wrote the analysis chapter myself.",
+                name: "Sample student",
+                meta: "MSc, UK university",
+              },
+              {
+                quote: "I was stuck on a Python data-cleaning script for days. One session and a clear explanation later, I knew exactly how to fix it on my own.",
+                name: "Sample student",
+                meta: "Undergraduate, Computer Science",
+              },
+              {
+                quote: "The literature-review coaching helped me see how to structure my argument. The proofreading round caught issues I'd missed.",
+                name: "Sample student",
+                meta: "Postgraduate, Humanities",
+              },
+            ].map((t, i) => (
+              <Reveal key={i} delay={i * 0.04}>
+                <figure className="card flex h-full flex-col">
+                  <div className="text-brand-600" aria-hidden="true">
+                    <svg width="28" height="20" viewBox="0 0 28 20" fill="currentColor">
+                      <path d="M0 20V11.4C0 7.8 0.8 4.9 2.4 2.9 4 0.9 6.3 0 9.3 0v4.6c-1.4 0-2.5 0.4-3.3 1.3-0.8 0.9-1.1 2-1.1 3.5h4.4V20H0zm17.6 0V11.4c0-3.6 0.8-6.5 2.4-8.5C21.6 0.9 23.9 0 26.9 0v4.6c-1.4 0-2.5 0.4-3.3 1.3-0.8 0.9-1.1 2-1.1 3.5h4.4V20h-9.3z"/>
+                    </svg>
+                  </div>
+                  <blockquote className="mt-3 text-sm text-slate-700">
+                    &ldquo;{t.quote}&rdquo;
+                  </blockquote>
+                  <figcaption className="mt-5 border-t border-slate-100 pt-3 text-xs">
+                    <div className="font-semibold text-ink-900">{t.name}</div>
+                    <div className="text-slate-500">{t.meta}</div>
+                  </figcaption>
+                </figure>
+              </Reveal>
+            ))}
+          </div>
+          <p className="mx-auto mt-8 max-w-2xl text-center text-xs text-slate-500">
+            We don&apos;t publish unverified testimonials. The text above is illustrative
+            until real student feedback (with permission) replaces it.
+          </p>
+        </div>
+      </section>
+
       {/* CTA + integrity */}
       <section className="section">
         <div className="container grid gap-8 lg:grid-cols-3">

@@ -65,6 +65,14 @@ export function EnquiryForm({ services }: { services: Service[] }) {
 
   return (
     <form onSubmit={onSubmit} className="card space-y-5">
+      {/* Honeypot — hidden from humans, attractive to bots */}
+      <div aria-hidden="true" className="absolute -left-[9999px] top-auto h-0 w-0 overflow-hidden">
+        <label>
+          Website (leave blank)
+          <input type="text" name="website" tabIndex={-1} autoComplete="off" />
+        </label>
+      </div>
+
       <div className="grid gap-4 sm:grid-cols-2">
         <Field label="Full name" name="name" required />
         <Field label="Email" name="email" type="email" required />

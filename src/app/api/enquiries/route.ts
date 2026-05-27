@@ -5,6 +5,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { sendMail } from "@/lib/mailer";
 import { getSiteSettings } from "@/lib/settings";
+import { check as rateLimit, clientIp } from "@/lib/rate-limit";
 
 const schema = z.object({
   name: z.string().min(2).max(120),
@@ -22,15 +23,34 @@ const schema = z.object({
   fileUrl: z.string().max(500).optional().or(z.literal("")),
   consent: z.boolean(),
   integrityAck: z.boolean(),
+  // Honeypot — real browsers leave this empty; bots fill it because it's
+  // a field named like a real one. Never shown to humans (visually hidden).
+  website: z.string().max(200).optional().or(z.literal("")),
 });
 
 export async function POST(req: Request) {
+  // Rate limit by IP — 5 submissions per hour. Sufficient for legitimate
+  // students; meaningfully slows bots.
+  const ip = clientIp(req);
+  const rl = rateLimit(`enquiry:${ip}`, { limit: 5, windowMs: 60 * 60 * 1000 });
+  if (!rl.ok) {
+    return NextResponse.json(
+      { error: "Too many enquiries from this network. Please try again later or contact us directly." },
+      { status: 429, headers: { "Retry-After": String(Math.ceil((rl.resetAt - Date.now()) / 1000)) } },
+    );
+  }
+
   const body = await req.json().catch(() => null);
   const parsed = schema.safeParse(body);
   if (!parsed.success) {
     return NextResponse.json({ error: "Please complete all required fields." }, { status: 400 });
   }
   const data = parsed.data;
+  // Honeypot — if the hidden field is filled, silently accept and discard.
+  // Returning 200 (instead of 400) prevents bots from learning the trap.
+  if (data.website && data.website.trim().length > 0) {
+    return NextResponse.json({ ok: true, id: "ignored" });
+  }
   if (!data.consent || !data.integrityAck) {
     return NextResponse.json({ error: "Please accept both consent boxes." }, { status: 400 });
   }
