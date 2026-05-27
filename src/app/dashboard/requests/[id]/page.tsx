@@ -31,6 +31,13 @@ export default async function RequestDetail({ params }: { params: { id: string }
         </dl>
         <h3 className="h3 mt-6">Description</h3>
         <p className="mt-2 whitespace-pre-wrap text-sm text-slate-700">{enquiry.description}</p>
+        {enquiry.fileUrl && (
+          <p className="mt-3 text-sm">
+            <a className="text-brand-700 hover:underline" href={enquiry.fileUrl} target="_blank" rel="noreferrer">
+              📎 View uploaded file
+            </a>
+          </p>
+        )}
       </div>
 
       {enquiry.updates.length > 0 && (

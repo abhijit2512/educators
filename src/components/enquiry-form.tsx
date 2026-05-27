@@ -20,6 +20,23 @@ export function EnquiryForm({ services }: { services: Service[] }) {
     payload.consent = fd.get("consent") === "on";
     payload.integrityAck = fd.get("integrityAck") === "on";
 
+    // Upload the file (if any) first, then attach its URL to the enquiry.
+    const file = fd.get("file");
+    if (file instanceof File && file.size > 0) {
+      const upFd = new FormData();
+      upFd.append("file", file);
+      const up = await fetch("/api/upload", { method: "POST", body: upFd });
+      if (!up.ok) {
+        const j = await up.json().catch(() => ({}));
+        setErrorMsg(j.error || "File upload failed. Please try a smaller file or different format.");
+        setStatus("error");
+        return;
+      }
+      const j = await up.json();
+      payload.fileUrl = j.url;
+    }
+    delete payload.file;
+
     const res = await fetch("/api/enquiries", {
       method: "POST",
       headers: { "Content-Type": "application/json" },

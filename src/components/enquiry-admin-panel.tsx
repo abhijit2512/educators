@@ -83,6 +83,13 @@ export function EnquiryAdminPanel({ enquiry }: Props) {
           </dl>
           <h4 className="mt-4 text-sm font-semibold">Description</h4>
           <p className="mt-1 whitespace-pre-wrap text-sm text-slate-700">{enquiry.description}</p>
+          {enquiry.fileUrl && (
+            <p className="mt-3 text-sm">
+              <a className="text-brand-700 hover:underline" href={enquiry.fileUrl} target="_blank" rel="noreferrer">
+                📎 Download uploaded file
+              </a>
+            </p>
+          )}
         </div>
 
         <div className="card space-y-4">

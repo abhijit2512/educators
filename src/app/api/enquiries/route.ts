@@ -19,6 +19,7 @@ const schema = z.object({
   wordCount: z.union([z.string(), z.number()]).optional(),
   programmingLanguage: z.string().max(80).optional().or(z.literal("")),
   description: z.string().min(10).max(8000),
+  fileUrl: z.string().max(500).optional().or(z.literal("")),
   consent: z.boolean(),
   integrityAck: z.boolean(),
 });
@@ -55,6 +56,7 @@ export async function POST(req: Request) {
       wordCount: wordCount || null,
       programmingLanguage: data.programmingLanguage || null,
       description: data.description,
+      fileUrl: data.fileUrl || null,
       consent: data.consent,
       integrityAck: data.integrityAck,
     },

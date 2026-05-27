@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { getSiteSettings } from "@/lib/settings";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { FloatingCTA } from "@/components/floating-cta";
 import { Providers } from "./providers";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -42,6 +43,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <SiteHeader settings={settings} />
           <main className="min-h-[60vh]">{children}</main>
           <SiteFooter settings={settings} />
+          <FloatingCTA />
         </Providers>
       </body>
     </html>
