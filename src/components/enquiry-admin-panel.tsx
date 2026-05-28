@@ -14,6 +14,34 @@ export function EnquiryAdminPanel({ enquiry }: Props) {
   const [invoiceAmount, setInvoiceAmount] = useState("");
   const [saving, setSaving] = useState(false);
 
+  // Email composer state
+  const [emailSubject, setEmailSubject] = useState("");
+  const [emailBody, setEmailBody] = useState("");
+  const [logEmail, setLogEmail] = useState(true);
+  const [emailState, setEmailState] = useState<"idle" | "sending" | "ok" | "err">("idle");
+  const [emailError, setEmailError] = useState("");
+
+  async function sendEmail() {
+    if (!emailSubject.trim() || !emailBody.trim()) return;
+    setEmailState("sending");
+    setEmailError("");
+    const res = await fetch(`/api/admin/enquiries/${enquiry.id}/email`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ subject: emailSubject, message: emailBody, logToTimeline: logEmail }),
+    });
+    if (res.ok) {
+      setEmailState("ok");
+      setEmailSubject("");
+      setEmailBody("");
+      router.refresh();
+    } else {
+      const j = await res.json().catch(() => ({}));
+      setEmailError(j.error || "Could not send email.");
+      setEmailState("err");
+    }
+  }
+
   async function updateStatus(next: Status) {
     setSaving(true);
     await fetch(`/api/admin/enquiries/${enquiry.id}/status`, {
@@ -123,6 +151,44 @@ export function EnquiryAdminPanel({ enquiry }: Props) {
               <input className="input" type="number" min="1" step="0.01" placeholder="Amount in GBP" value={invoiceAmount} onChange={(e) => setInvoiceAmount(e.target.value)} />
               <button className="btn-primary" onClick={createInvoice} disabled={saving || !invoiceAmount}>Create</button>
             </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Email this student */}
+      <div className="card">
+        <h3 className="h3">Email this student</h3>
+        <p className="mt-1 text-sm text-slate-600">
+          Sends an email directly to <strong>{enquiry.email}</strong> using your configured SMTP.
+        </p>
+        <div className="mt-3 space-y-3">
+          <input
+            className="input"
+            placeholder="Subject"
+            value={emailSubject}
+            onChange={(e) => setEmailSubject(e.target.value)}
+          />
+          <textarea
+            className="input"
+            rows={5}
+            placeholder="Write your message… (line breaks are preserved)"
+            value={emailBody}
+            onChange={(e) => setEmailBody(e.target.value)}
+          />
+          <label className="flex items-center gap-2 text-sm text-slate-700">
+            <input type="checkbox" checked={logEmail} onChange={(e) => setLogEmail(e.target.checked)} />
+            Also show this message on the student&apos;s request timeline
+          </label>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={sendEmail}
+              disabled={emailState === "sending" || !emailSubject.trim() || !emailBody.trim()}
+              className="btn-primary"
+            >
+              {emailState === "sending" ? "Sending…" : "Send email"}
+            </button>
+            {emailState === "ok" && <span className="text-sm text-emerald-700">Email sent ✓</span>}
+            {emailState === "err" && <span className="text-sm text-red-700">{emailError}</span>}
           </div>
         </div>
       </div>

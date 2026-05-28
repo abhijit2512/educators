@@ -33,11 +33,7 @@ export default async function ServicesPage() {
         <div className="mx-auto max-w-3xl text-center">
           <span className="eyebrow">Services</span>
           <h1 className="h1 mt-2">Academic coaching and learning support</h1>
-          <p className="lead mt-4">
-            Every service below is delivered for tutoring, learning and guidance
-            purposes only. Students remain responsible for their own submitted
-            work.
-          </p>
+          <p className="lead mt-4">{settings.services_intro}</p>
         </div>
 
         {services.length === 0 ? (

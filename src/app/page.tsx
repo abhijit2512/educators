@@ -161,14 +161,14 @@ export default async function HomePage() {
         <div className="container">
           <div className="mx-auto max-w-2xl text-center">
             <span className="eyebrow">How it works</span>
-            <h2 className="h2 mt-2">From enquiry to learning, in 4 simple steps</h2>
+            <h2 className="h2 mt-2">{s.how_heading}</h2>
           </div>
           <ol className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {[
-              ["Submit your enquiry", "Tell us your subject, level and what you need help with."],
-              ["Get an ethical plan", "We recommend the right type of coaching, tutoring or guidance."],
-              ["Confirm and pay", "Secure payment via Stripe, PayPal or bank transfer."],
-              ["Learn with your mentor", "Sessions, feedback or walk-throughs — and you submit your own work."],
+              [s.how_1_title, s.how_1_text],
+              [s.how_2_title, s.how_2_text],
+              [s.how_3_title, s.how_3_text],
+              [s.how_4_title, s.how_4_text],
             ].map(([t, d], i) => (
               <Reveal key={t} delay={i * 0.05}>
                 <div className="card h-full">
@@ -186,19 +186,25 @@ export default async function HomePage() {
 
       {/* Why us */}
       <section className="section">
-        <div className="container grid gap-10 lg:grid-cols-3">
-          {[
-            ["Ethical by design", "We coach, tutor and review. We never complete assessed work for students."],
-            ["UK academic standards", "Mentors familiar with UK university conventions, OSCOLA, Harvard and APA."],
-            ["Worldwide students", "Online support for UK, EU, US, Middle East, Africa and Asia time zones."],
-          ].map(([t, d], i) => (
-            <Reveal key={t} delay={i * 0.05}>
-              <div className="card h-full">
-                <h3 className="h3">{t}</h3>
-                <p className="prose-academic mt-2">{d}</p>
-              </div>
-            </Reveal>
-          ))}
+        <div className="container">
+          <div className="mx-auto mb-10 max-w-2xl text-center">
+            <span className="eyebrow">Why us</span>
+            <h2 className="h2 mt-2">{s.why_heading}</h2>
+          </div>
+          <div className="grid gap-10 lg:grid-cols-3">
+            {[
+              [s.why_1_title, s.why_1_text],
+              [s.why_2_title, s.why_2_text],
+              [s.why_3_title, s.why_3_text],
+            ].map(([t, d], i) => (
+              <Reveal key={t} delay={i * 0.05}>
+                <div className="card h-full">
+                  <h3 className="h3">{t}</h3>
+                  <p className="prose-academic mt-2">{d}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
         </div>
       </section>
 

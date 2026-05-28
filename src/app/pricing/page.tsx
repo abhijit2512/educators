@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { Reveal } from "@/components/reveal";
+import { getSiteSettings } from "@/lib/settings";
 
 export const metadata = { title: "Pricing" };
 
@@ -16,7 +17,7 @@ async function safePlans() {
 }
 
 export default async function PricingPage() {
-  const plans = await safePlans();
+  const [plans, s] = await Promise.all([safePlans(), getSiteSettings()]);
 
   return (
     <section className="section">
@@ -24,11 +25,7 @@ export default async function PricingPage() {
         <div className="mx-auto max-w-3xl text-center">
           <span className="eyebrow">Pricing</span>
           <h1 className="h1 mt-2">Quote-based pricing</h1>
-          <p className="lead mt-4">
-            Final pricing depends on complexity, deadline, academic level, word count,
-            data-analysis needs, coding-support needs, editing requirements and type
-            of guidance requested.
-          </p>
+          <p className="lead mt-4">{s.pricing_intro}</p>
         </div>
 
         <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -63,9 +60,7 @@ export default async function PricingPage() {
           })}
         </div>
 
-        <div className="mt-10 text-center text-sm text-slate-500">
-          Prices are quoted in GBP by default; we accept payments via Stripe, PayPal and bank transfer.
-        </div>
+        <div className="mt-10 text-center text-sm text-slate-500">{s.pricing_note}</div>
       </div>
     </section>
   );

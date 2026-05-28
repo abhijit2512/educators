@@ -19,6 +19,28 @@ const FALLBACKS: Record<string, string> = {
     "One-to-one mentor sessions, written feedback, walk-through tutorials and reference examples — adapted to the student’s level and goals.",
   about_focus:
     "Familiar with UK university conventions and international academic standards; comfortable working across all major referencing styles.",
+  services_intro:
+    "Every service below is delivered for tutoring, learning and guidance purposes only. Students remain responsible for their own submitted work.",
+  pricing_intro:
+    "Final pricing depends on complexity, deadline, academic level, word count, data-analysis needs, coding-support needs, editing requirements and type of guidance requested.",
+  pricing_note:
+    "Prices are quoted in GBP by default; we accept payments via Stripe, PayPal and bank transfer.",
+  why_heading: "Why students choose us",
+  why_1_title: "Ethical by design",
+  why_1_text: "We coach, tutor and review. We never complete assessed work for students.",
+  why_2_title: "UK academic standards",
+  why_2_text: "Mentors familiar with UK university conventions, OSCOLA, Harvard and APA.",
+  why_3_title: "Worldwide students",
+  why_3_text: "Online support for UK, EU, US, Middle East, Africa and Asia time zones.",
+  how_heading: "From enquiry to learning, in 4 simple steps",
+  how_1_title: "Submit your enquiry",
+  how_1_text: "Tell us your subject, level and what you need help with.",
+  how_2_title: "Get an ethical plan",
+  how_2_text: "We recommend the right type of coaching, tutoring or guidance.",
+  how_3_title: "Confirm and pay",
+  how_3_text: "Secure payment via Stripe, PayPal or bank transfer.",
+  how_4_title: "Learn with your mentor",
+  how_4_text: "Sessions, feedback or walk-throughs — and you submit your own work.",
   footer_text:
     "We provide academic coaching, tutoring and learning support. We do not complete assessed work on behalf of students.",
   integrity_disclaimer:
