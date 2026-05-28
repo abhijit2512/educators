@@ -14,7 +14,9 @@
     "db:down": "docker compose down",
     "db:reset": "docker compose down -v && docker compose up -d",
     "setup": "prisma migrate deploy && tsx prisma/seed.ts",
-    "studio": "prisma studio"
+    "studio": "prisma studio",
+    "content:export": "tsx prisma/export-content.ts",
+    "content:import": "tsx prisma/import-content.ts"
   },
   "dependencies": {
     "@prisma/client": "^5.22.0",

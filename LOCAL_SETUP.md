@@ -153,9 +153,29 @@ where you can browse and edit every row in your local database.
    git push
    ```
 2. Redeploy on Hostinger (see `HOSTINGER_DEPLOYMENT.md`).
-3. **Content** (text/services/pricing edited in the admin panel) is per-site,
-   so re-enter important content on the live admin panel, or copy the
-   database if you want them identical.
+3. **Content** (text/services/pricing/samples edited in the admin panel) lives
+   in each site's own database. To copy it, use the content sync tool below.
+
+## Copy content between local and live (one command)
+
+This moves only editable content — **site settings, services, pricing plans
+and samples**. It never touches users, enquiries, payments or invoices.
+
+**Save your local content to a file:**
+```bash
+npm run content:export
+# creates content-export.json
+```
+
+**Load it into another copy** (point `.env`'s `DATABASE_URL` at that copy
+first — e.g. your live Hostinger database — then):
+```bash
+npm run content:import
+```
+
+It updates items that already exist (matched by key/slug/title) and adds new
+ones; it never deletes anything. You can also pass a filename:
+`npm run content:export my-backup.json` / `npm run content:import my-backup.json`.
 
 ---
 

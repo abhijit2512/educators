@@ -18,3 +18,5 @@ prisma/dev.db
 public/uploads
 tsconfig.tsbuildinfo
 *.tsbuildinfo
+content-export.json
+*.content-export.json
