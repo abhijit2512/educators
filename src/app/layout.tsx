@@ -7,6 +7,11 @@ import { FloatingCTA } from "@/components/floating-cta";
 import { CookieConsent } from "@/components/cookie-consent";
 import { Providers } from "./providers";
 
+// Render every route dynamically so admin content edits (services, pricing,
+// settings, logo, header/footer) appear on the live site immediately instead
+// of being frozen into a static build.
+export const dynamic = "force-dynamic";
+
 export async function generateMetadata(): Promise<Metadata> {
   const s = await getSiteSettings();
   const title = `${s.business_name} — Ethical academic support & tutoring`;
