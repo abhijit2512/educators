@@ -117,8 +117,8 @@ const PRICING_PLANS = [
 ];
 
 async function main() {
-  const adminEmail = process.env.ADMIN_EMAIL ?? "admin@your-domain.com";
-  const adminPassword = process.env.ADMIN_PASSWORD ?? "ChangeMeNow!123";
+  const adminEmail = process.env.ADMIN_EMAIL ?? "admin@educatorsunited.in";
+  const adminPassword = process.env.ADMIN_PASSWORD ?? "Admin@12345";
   const adminName = process.env.ADMIN_NAME ?? "Site Admin";
   const passwordHash = await bcrypt.hash(adminPassword, 12);
 
@@ -127,7 +127,15 @@ async function main() {
     update: { role: Role.ADMIN, name: adminName },
     create: { email: adminEmail, passwordHash, role: Role.ADMIN, name: adminName },
   });
-  console.log(`✓ Admin user ready: ${adminEmail}`);
+  console.log("\n========================================");
+  console.log("  ADMIN LOGIN (use these at /login)");
+  console.log(`  Email:    ${adminEmail}`);
+  console.log(
+    process.env.ADMIN_PASSWORD
+      ? "  Password: (the ADMIN_PASSWORD you set in .env)"
+      : `  Password: ${adminPassword}   <-- default, change it after first login`,
+  );
+  console.log("========================================\n");
 
   for (const [k, v] of Object.entries(DEFAULT_SETTINGS)) {
     await prisma.siteSetting.upsert({

@@ -9,7 +9,12 @@
     "lint": "next lint",
     "postinstall": "prisma generate || true",
     "seed": "tsx prisma/seed.ts",
-    "migrate": "prisma migrate deploy"
+    "migrate": "prisma migrate deploy",
+    "db:up": "docker compose up -d",
+    "db:down": "docker compose down",
+    "db:reset": "docker compose down -v && docker compose up -d",
+    "setup": "prisma migrate deploy && tsx prisma/seed.ts",
+    "studio": "prisma studio"
   },
   "dependencies": {
     "@prisma/client": "^5.22.0",

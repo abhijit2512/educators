@@ -1,0 +1,31 @@
+# One-command local MySQL for development.
+# Usage:
+#   docker compose up -d      # start the database
+#   docker compose down       # stop it (data is kept)
+#   docker compose down -v    # stop AND erase all local data
+#
+# After it's running, your .env DATABASE_URL should be:
+#   DATABASE_URL="mysql://educators:educators@localhost:3306/educators"
+
+services:
+  db:
+    image: mysql:8
+    container_name: educators-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: educators
+      MYSQL_USER: educators
+      MYSQL_PASSWORD: educators
+    ports:
+      - "3306:3306"
+    volumes:
+      - educators_db:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-proot"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  educators_db:

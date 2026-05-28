@@ -34,6 +34,10 @@ TypeScript + Tailwind CSS + Prisma (MySQL) + NextAuth + Framer Motion**.
 
 ## Quick start (local)
 
+> **Non-coder?** Follow **`LOCAL_SETUP.md`** instead — it's a step-by-step
+> guide (install Node, one-command database, find your admin login, run the
+> site) written for beginners.
+
 ```bash
 # 1. install deps
 npm install
