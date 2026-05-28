@@ -18,7 +18,9 @@ export async function generateMetadata(): Promise<Metadata> {
   const description =
     "Academic coaching, dissertation guidance, research-method support, SPSS/NVivo tutoring, coding learning support, proofreading and referencing guidance for UK and international students.";
   const site = process.env.NEXT_PUBLIC_SITE_URL || "https://educatorsunited.in";
-  const logo = s.logo_url || "/logo.svg";
+  // Embedded (data:) logos can't be used for favicons/social images — those
+  // need a real URL — so fall back to the static logo for metadata only.
+  const logo = s.logo_url && !s.logo_url.startsWith("data:") ? s.logo_url : "/logo.svg";
   return {
     metadataBase: new URL(site),
     title: { default: title, template: `%s · ${s.business_name}` },
@@ -44,12 +46,13 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const settings = await getSiteSettings();
   const sectionPy = Number(settings.section_padding_y) || 80;
   const site = process.env.NEXT_PUBLIC_SITE_URL || "https://educatorsunited.in";
+  const metaLogo = settings.logo_url && !settings.logo_url.startsWith("data:") ? settings.logo_url : "/logo.svg";
   const orgJsonLd = {
     "@context": "https://schema.org",
     "@type": "EducationalOrganization",
     name: settings.business_name,
     url: site,
-    logo: settings.logo_url?.startsWith("http") ? settings.logo_url : `${site}${settings.logo_url || "/logo.svg"}`,
+    logo: metaLogo.startsWith("http") ? metaLogo : `${site}${metaLogo}`,
     email: settings.business_email,
     telephone: settings.business_phone,
     sameAs: [settings.business_facebook].filter(Boolean),

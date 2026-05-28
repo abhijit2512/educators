@@ -2,32 +2,37 @@
 import { useState } from "react";
 
 /**
- * Image field for the admin: shows a live preview, lets you either upload a
- * file (sent to /api/upload, which returns a public URL) or paste a URL.
- * The chosen URL is kept in a real input named `name` so it submits with the
- * surrounding form exactly like a normal text field.
+ * Image field for the admin: shows a live preview, lets you either pick an
+ * image (embedded directly as a data URL so it works on any host without a
+ * writable uploads folder) or paste an image URL. The chosen value is kept in
+ * a real input named `name` so it submits with the surrounding form exactly
+ * like a normal text field.
  */
 export function ImageUpload({ name, initialUrl }: { name: string; initialUrl?: string }) {
   const [url, setUrl] = useState(initialUrl || "");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
 
-  async function onFile(e: React.ChangeEvent<HTMLInputElement>) {
+  function onFile(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file) return;
-    setBusy(true);
     setError("");
-    const fd = new FormData();
-    fd.append("file", file);
-    const res = await fetch("/api/upload", { method: "POST", body: fd });
-    setBusy(false);
-    if (res.ok) {
-      const j = await res.json();
-      setUrl(j.url);
-    } else {
-      const j = await res.json().catch(() => ({}));
-      setError(j.error || "Upload failed.");
+    // Keep the embedded image small — logos should be well under this.
+    if (file.size > 1.5 * 1024 * 1024) {
+      setError("Please use an image under 1.5 MB (logos are usually much smaller).");
+      return;
     }
+    setBusy(true);
+    const reader = new FileReader();
+    reader.onload = () => {
+      setUrl(String(reader.result || ""));
+      setBusy(false);
+    };
+    reader.onerror = () => {
+      setError("Could not read that image. Try a different file.");
+      setBusy(false);
+    };
+    reader.readAsDataURL(file);
   }
 
   return (
