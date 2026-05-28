@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { Reveal } from "@/components/reveal";
 import { IntegrityBanner } from "@/components/integrity-banner";
 import { iconFor } from "@/components/service-icons";
+import { Hero3DLoader } from "@/components/hero-3d-loader";
 
 async function safeServices() {
   try {
@@ -27,6 +28,9 @@ export default async function HomePage() {
       <section className="relative overflow-hidden">
         <div className="pointer-events-none absolute inset-0 bg-hero-radial" />
         <div className="pointer-events-none absolute inset-0 bg-grid-soft [background-size:36px_36px] opacity-30" />
+        <div className="pointer-events-none absolute right-0 top-0 hidden h-full w-1/2 opacity-90 lg:block">
+          <Hero3DLoader />
+        </div>
         <div className="container relative grid gap-12 pt-16 pb-20 sm:pt-24 lg:grid-cols-2 lg:pt-28 lg:pb-28">
           <div>
             <Reveal>

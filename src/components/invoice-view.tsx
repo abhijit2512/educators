@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { PayInvoiceButton } from "./pay-invoice-button";
+import { StripePayButton } from "./stripe-pay-button";
 
 type Invoice = {
   id: string;
@@ -74,7 +75,8 @@ export function InvoiceView({ invoice }: { invoice: Invoice }) {
         </p>
       </div>
 
-      <div className="mt-6 print:hidden">
+      <div className="mt-6 grid gap-4 sm:grid-cols-2 print:hidden">
+        <StripePayButton invoiceId={invoice.id} status={invoice.status} />
         <PayInvoiceButton
           invoiceId={invoice.id}
           amount={invoice.amount.toString()}
