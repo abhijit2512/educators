@@ -38,19 +38,33 @@ enum PaymentProvider {
 }
 
 model User {
-  id           String          @id @default(cuid())
-  email        String          @unique
+  id           String   @id @default(cuid())
+  email        String   @unique
   passwordHash String
   name         String?
-  role         Role            @default(STUDENT)
-  createdAt    DateTime        @default(now())
-  updatedAt    DateTime        @updatedAt
+  role         Role     @default(STUDENT)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 
-  profile      StudentProfile?
-  enquiries    Enquiry[]
-  invoices     Invoice[]
-  files        UploadedFile[]
-  updates      RequestUpdate[]
+  profile     StudentProfile?
+  enquiries   Enquiry[]
+  invoices    Invoice[]
+  files       UploadedFile[]
+  updates     RequestUpdate[]
+  resetTokens PasswordResetToken[]
+}
+
+model PasswordResetToken {
+  id        String    @id @default(cuid())
+  userId    String
+  tokenHash String    @unique
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }
 
 model StudentProfile {

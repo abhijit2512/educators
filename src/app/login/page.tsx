@@ -46,7 +46,12 @@ function LoginForm() {
             <input className="input" type="email" name="email" required />
           </div>
           <div>
-            <label className="label">Password</label>
+            <div className="flex items-center justify-between">
+              <label className="label">Password</label>
+              <Link href="/forgot-password" className="mb-1.5 text-xs font-medium text-brand-700 hover:underline">
+                Forgot password?
+              </Link>
+            </div>
             <input className="input" type="password" name="password" required />
           </div>
           {error && <p className="text-sm text-red-700">{error}</p>}

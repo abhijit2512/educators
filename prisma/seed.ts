@@ -44,6 +44,15 @@ const SERVICES = [
   ["coding-and-programming", "Coding and programming learning support", "Tech", "Tutoring, debugging walk-throughs, code review and explanation across popular languages."],
 ];
 
+const SAMPLES = [
+  ["Dissertation structure walkthrough (reference)", "Research", "An annotated outline showing how a Master's dissertation can be structured — abstract, introduction, literature review, methodology, results, discussion and conclusion. For learning and reference only."],
+  ["SPSS output interpretation guide (reference)", "Data analysis", "A worked example explaining how to read a regression output table — coefficients, p-values, R-squared — written so students can interpret their own analyses. For learning and reference only."],
+  ["Harvard referencing quick guide (reference)", "Referencing", "Side-by-side examples of how to cite books, journal articles and websites in Harvard style, with in-text and reference-list formatting. For learning and reference only."],
+  ["Python debugging walk-through (reference)", "Coding", "A commented example showing how to trace and fix a common Python error step by step, with explanations of the reasoning. For learning and reference only."],
+  ["Literature review synthesis matrix (reference)", "Research", "A template showing how to compare sources across themes so you can synthesise rather than summarise. For learning and reference only."],
+  ["Academic poster layout example (reference)", "Communication", "An annotated poster layout demonstrating visual hierarchy, section flow and readable typography for conferences. For learning and reference only."],
+];
+
 const PRICING_PLANS = [
   {
     slug: "basic-learning-support",
@@ -132,6 +141,21 @@ async function main() {
     });
   }
   console.log(`✓ ${PRICING_PLANS.length} pricing plans ready`);
+
+  // Sample papers have no natural unique key — only seed if the table is empty
+  // so admin-managed samples are never duplicated on re-run.
+  const sampleCount = await prisma.samplePaper.count();
+  if (sampleCount === 0) {
+    for (let i = 0; i < SAMPLES.length; i++) {
+      const [title, subject, description] = SAMPLES[i];
+      await prisma.samplePaper.create({
+        data: { title, subject, description, order: i, visible: true },
+      });
+    }
+    console.log(`✓ ${SAMPLES.length} sample resources created`);
+  } else {
+    console.log(`✓ Samples already present (${sampleCount}) — skipped`);
+  }
 }
 
 main()

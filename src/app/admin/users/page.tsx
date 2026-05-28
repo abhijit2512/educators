@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import { UsersTable } from "@/components/admin/users-table";
 
 export const dynamic = "force-dynamic";
 
@@ -6,30 +7,27 @@ export default async function AdminUsersPage() {
   const users = await prisma.user.findMany({
     orderBy: { createdAt: "desc" },
     include: { profile: true, _count: { select: { enquiries: true } } },
-    take: 200,
+    take: 500,
   });
+
+  const rows = users.map((u) => ({
+    id: u.id,
+    name: u.name,
+    email: u.email,
+    role: u.role,
+    country: u.profile?.country ?? null,
+    requests: u._count.enquiries,
+    joined: u.createdAt.toLocaleDateString("en-GB"),
+  }));
+
   return (
     <div className="space-y-4">
       <h1 className="h2">Users</h1>
-      <div className="overflow-hidden rounded-2xl bg-white shadow-soft ring-1 ring-slate-100">
-        <table className="w-full text-sm">
-          <thead className="bg-slate-50 text-left text-xs uppercase text-slate-500">
-            <tr><th className="px-4 py-2">Name</th><th className="px-4 py-2">Email</th><th className="px-4 py-2">Role</th><th className="px-4 py-2">Country</th><th className="px-4 py-2">Requests</th><th className="px-4 py-2">Joined</th></tr>
-          </thead>
-          <tbody>
-            {users.map((u) => (
-              <tr key={u.id} className="border-t border-slate-100">
-                <td className="px-4 py-2">{u.name || "—"}</td>
-                <td className="px-4 py-2">{u.email}</td>
-                <td className="px-4 py-2">{u.role}</td>
-                <td className="px-4 py-2">{u.profile?.country || "—"}</td>
-                <td className="px-4 py-2">{u._count.enquiries}</td>
-                <td className="px-4 py-2 text-slate-500">{u.createdAt.toLocaleDateString("en-GB")}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <p className="text-sm text-slate-600">
+        Promote a student to admin, demote an admin, or remove an account. The
+        last remaining admin is protected from demotion and deletion.
+      </p>
+      <UsersTable users={rows} />
     </div>
   );
 }

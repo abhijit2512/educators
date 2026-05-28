@@ -79,9 +79,15 @@ Open the **Hostinger SSH terminal** (or Node app shell) and run:
 ```bash
 npm install
 npm run build               # runs prisma generate + next build
-npx prisma migrate deploy   # creates / updates database tables
-npm run seed                # creates admin user + default services + settings
+npx prisma migrate deploy   # applies prisma/migrations/* — creates all tables
+npm run seed                # creates admin user + default services + samples + settings
 ```
+
+> The repository ships a committed baseline migration at
+> `prisma/migrations/0_init/`, so `prisma migrate deploy` creates every
+> table (User, Enquiry, Service, PricingPlan, SamplePaper, Payment,
+> Invoice, SiteSetting, RequestUpdate, UploadedFile, PasswordResetToken)
+> on a fresh database with no extra steps.
 
 ---
 
@@ -103,6 +109,18 @@ Click **Start application**. Visit `https://educatorsunited.in` to confirm.
 3. Force HTTPS.
 
 ---
+
+## 7b. Verify the deployment
+
+Visit `https://educatorsunited.in/api/health`. You should see JSON like:
+
+```json
+{ "status": "ok", "checks": { "app": "ok", "database": "ok", "smtp": "configured" } }
+```
+
+If `database` shows `unreachable`, re-check `DATABASE_URL`. The `smtp`,
+`stripe` and `paypal` flags simply report whether those optional
+integrations have their env vars set.
 
 ## 8. First-time admin checks
 
