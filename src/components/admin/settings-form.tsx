@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { ImageUpload } from "./image-upload";
 
 function TestEmailButton() {
   const [state, setState] = useState<"idle" | "sending" | "ok" | "warn" | "err">("idle");
@@ -49,7 +50,7 @@ function TestEmailButton() {
   );
 }
 
-type Field = { key: string; label: string; type?: "text" | "textarea" | "url" };
+type Field = { key: string; label: string; type?: "text" | "textarea" | "url" | "image" };
 type Group = { title: string; fields: Field[] };
 
 const GROUPS: Group[] = [
@@ -57,7 +58,7 @@ const GROUPS: Group[] = [
     title: "Business & contact",
     fields: [
       { key: "business_name", label: "Business name" },
-      { key: "logo_url", label: "Logo URL", type: "url" },
+      { key: "logo_url", label: "Logo", type: "image" },
       { key: "business_email", label: "Email" },
       { key: "business_phone", label: "Phone" },
       { key: "business_whatsapp", label: "WhatsApp" },
@@ -174,7 +175,9 @@ export function SettingsForm({ initial }: { initial: Record<string, string> }) {
           {group.fields.map((f) => (
             <div key={f.key}>
               <label className="label">{f.label}</label>
-              {f.type === "textarea" ? (
+              {f.type === "image" ? (
+                <ImageUpload name={f.key} initialUrl={initial[f.key] || ""} />
+              ) : f.type === "textarea" ? (
                 <textarea className="input" name={f.key} rows={3} defaultValue={initial[f.key] || ""} />
               ) : (
                 <input className="input" name={f.key} type={f.type || "text"} defaultValue={initial[f.key] || ""} />
