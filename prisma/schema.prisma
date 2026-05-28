@@ -1,12 +1,12 @@
 // Educators - academic support platform
-// Database: MySQL (Hostinger). Override DATABASE_URL via env.
+// Database: PostgreSQL (Supabase). Override DATABASE_URL via env.
 
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
