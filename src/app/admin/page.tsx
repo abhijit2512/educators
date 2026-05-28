@@ -97,6 +97,35 @@ export default async function AdminHome() {
       </section>
 
       <section>
+        <h2 className="h3">Preview public pages</h2>
+        <p className="mt-1 text-sm text-slate-600">Open the live page in a new tab to see your edits.</p>
+        <div className="mt-3 flex flex-wrap gap-2 text-sm">
+          {[
+            ["/", "Home"],
+            ["/about", "About"],
+            ["/services", "Services"],
+            ["/services/coding-and-programming", "Coding support"],
+            ["/pricing", "Pricing"],
+            ["/samples", "Samples"],
+            ["/how-it-works", "How it works"],
+            ["/faq", "FAQ"],
+            ["/contact", "Contact"],
+            ["/legal/academic-integrity", "Academic integrity"],
+          ].map(([href, label]) => (
+            <a
+              key={href}
+              href={href}
+              target="_blank"
+              rel="noreferrer"
+              className="rounded-full bg-white px-3 py-1 font-medium text-brand-700 ring-1 ring-slate-200 hover:bg-brand-50"
+            >
+              {label} ↗
+            </a>
+          ))}
+        </div>
+      </section>
+
+      <section>
         <div className="flex items-center justify-between">
           <h2 className="h3">Recent enquiries</h2>
           <Link href="/admin/enquiries" className="text-sm text-brand-700 hover:underline">See all →</Link>
