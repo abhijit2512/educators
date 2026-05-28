@@ -4,9 +4,13 @@ import { SiteLogo } from "./site-logo";
 
 export function SiteFooter({ settings }: { settings: SiteSettings }) {
   const year = new Date().getFullYear();
+  const footerPy = Number(settings.footer_padding_y) || 56;
   return (
     <footer className="mt-20 border-t border-slate-200 bg-white">
-      <div className="container grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-4">
+      <div
+        className="container grid gap-10 sm:grid-cols-2 lg:grid-cols-4"
+        style={{ paddingTop: footerPy, paddingBottom: footerPy }}
+      >
         <div>
           <div className="mb-3">
             <SiteLogo logoUrl={settings.logo_url} businessName={settings.business_name} size={36} />

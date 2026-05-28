@@ -42,6 +42,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const settings = await getSiteSettings();
+  const sectionPy = Number(settings.section_padding_y) || 80;
   const site = process.env.NEXT_PUBLIC_SITE_URL || "https://educatorsunited.in";
   const orgJsonLd = {
     "@context": "https://schema.org",
@@ -56,7 +57,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   };
   return (
     <html lang="en">
-      <body className="min-h-screen antialiased">
+      <body
+        className="min-h-screen antialiased"
+        style={{ "--section-py": `${sectionPy}px` } as React.CSSProperties}
+      >
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}

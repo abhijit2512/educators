@@ -20,9 +20,13 @@ const NAV = [
 export function SiteHeader({ settings }: { settings: SiteSettings }) {
   const [open, setOpen] = useState(false);
   const { data: session } = useSession();
+  const headerPy = Number(settings.header_padding_y) || 12;
   return (
     <header className="sticky top-0 z-40 border-b border-slate-200/80 bg-white/90 backdrop-blur">
-      <div className="container flex h-16 items-center justify-between gap-3">
+      <div
+        className="container flex items-center justify-between gap-3"
+        style={{ paddingTop: headerPy, paddingBottom: headerPy }}
+      >
         <SiteLogo logoUrl={settings.logo_url} businessName={settings.business_name} size={40} />
 
         <nav className="hidden items-center gap-1 lg:flex">

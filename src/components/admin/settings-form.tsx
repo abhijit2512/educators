@@ -50,7 +50,7 @@ function TestEmailButton() {
   );
 }
 
-type Field = { key: string; label: string; type?: "text" | "textarea" | "url" | "image" };
+type Field = { key: string; label: string; type?: "text" | "textarea" | "url" | "image" | "number"; hint?: string };
 type Group = { title: string; fields: Field[] };
 
 const GROUPS: Group[] = [
@@ -144,6 +144,14 @@ const GROUPS: Group[] = [
       { key: "integrity_disclaimer", label: "Academic integrity disclaimer", type: "textarea" },
     ],
   },
+  {
+    title: "Layout & spacing (padding)",
+    fields: [
+      { key: "header_padding_y", label: "Header padding — top & bottom (pixels)", type: "number", hint: "Default 12. Higher = taller header bar." },
+      { key: "footer_padding_y", label: "Footer padding — top & bottom (pixels)", type: "number", hint: "Default 56. Space inside the footer area." },
+      { key: "section_padding_y", label: "Section spacing — top & bottom (pixels)", type: "number", hint: "Default 80. Vertical space around every page section." },
+    ],
+  },
 ];
 
 const ALL_FIELDS = GROUPS.flatMap((g) => g.fields);
@@ -182,6 +190,7 @@ export function SettingsForm({ initial }: { initial: Record<string, string> }) {
               ) : (
                 <input className="input" name={f.key} type={f.type || "text"} defaultValue={initial[f.key] || ""} />
               )}
+              {f.hint && <p className="mt-1 text-xs text-slate-500">{f.hint}</p>}
             </div>
           ))}
         </fieldset>

@@ -117,6 +117,11 @@ export const EXTENDED_DEFAULTS: Record<string, string> = {
     "## Student responsibility",
     "Students remain fully responsible for understanding, adapting and submitting their own work. Before submitting, students should always check their institution’s rules on acceptable use of external academic support.",
   ].join("\n"),
+
+  // Layout spacing — vertical padding in pixels (top & bottom), admin-editable
+  header_padding_y: "12",
+  footer_padding_y: "56",
+  section_padding_y: "80",
 };
 
 export const DEFAULT_FAQ: Array<[string, string]> = [
