@@ -23,7 +23,7 @@ export function SiteLogo({
   size?: number;
   showWordmark?: boolean;
 }) {
-  const sources = [logoUrl || "/logo.png", "/logo.svg"].filter(Boolean) as string[];
+  const sources = [logoUrl || "/logo.svg", "/logo.svg"].filter(Boolean) as string[];
   const [idx, setIdx] = useState(0);
   const [broken, setBroken] = useState(false);
 

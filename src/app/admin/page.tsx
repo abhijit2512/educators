@@ -19,7 +19,7 @@ export default async function AdminHome() {
   const phone = (settings.business_phone || "").replace(/[^0-9]/g, "");
   const checklist = [
     {
-      done: !!settings.logo_url && settings.logo_url !== "/logo.png",
+      done: !!settings.logo_url && settings.logo_url !== "/logo.svg",
       label: "Upload your logo",
       href: "/admin/settings",
     },

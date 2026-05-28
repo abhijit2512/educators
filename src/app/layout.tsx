@@ -13,7 +13,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const description =
     "Academic coaching, dissertation guidance, research-method support, SPSS/NVivo tutoring, coding learning support, proofreading and referencing guidance for UK and international students.";
   const site = process.env.NEXT_PUBLIC_SITE_URL || "https://educatorsunited.in";
-  const logo = s.logo_url || "/logo.png";
+  const logo = s.logo_url || "/logo.svg";
   return {
     metadataBase: new URL(site),
     title: { default: title, template: `%s · ${s.business_name}` },
@@ -43,7 +43,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     "@type": "EducationalOrganization",
     name: settings.business_name,
     url: site,
-    logo: settings.logo_url?.startsWith("http") ? settings.logo_url : `${site}${settings.logo_url || "/logo.png"}`,
+    logo: settings.logo_url?.startsWith("http") ? settings.logo_url : `${site}${settings.logo_url || "/logo.svg"}`,
     email: settings.business_email,
     telephone: settings.business_phone,
     sameAs: [settings.business_facebook].filter(Boolean),

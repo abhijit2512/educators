@@ -9,7 +9,7 @@ const FALLBACKS: Record<string, string> = {
   business_whatsapp: process.env.BUSINESS_WHATSAPP ?? "+44 0000 000000",
   business_facebook: process.env.BUSINESS_FACEBOOK ?? "https://facebook.com/educatorsunited",
   business_address: "United Kingdom (worldwide online support)",
-  logo_url: process.env.BUSINESS_LOGO_URL ?? "/logo.png",
+  logo_url: process.env.BUSINESS_LOGO_URL ?? "/logo.svg",
   hero_headline: "Ethical academic support for UK and international students",
   hero_subheading:
     "Tutoring, research-method coaching, coding guidance, proofreading and learning support — delivered by qualified subject mentors. We help you learn; you submit your own work.",
