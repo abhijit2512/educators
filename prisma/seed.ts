@@ -119,14 +119,18 @@ const PRICING_PLANS = [
 ];
 
 async function main() {
-  const adminEmail = process.env.ADMIN_EMAIL ?? "admin@educatorsunited.in";
-  const adminPassword = process.env.ADMIN_PASSWORD ?? "Admin@12345";
+  // Normalize to match the login lookup (auth.ts lowercases + trims the email).
+  const adminEmail = (process.env.ADMIN_EMAIL ?? "admin@educatorsunited.in").toLowerCase().trim();
+  // Trim so a stray space pasted into the env var doesn't break the password.
+  const adminPassword = (process.env.ADMIN_PASSWORD ?? "Admin@12345").trim();
   const adminName = process.env.ADMIN_NAME ?? "Site Admin";
   const passwordHash = await bcrypt.hash(adminPassword, 12);
 
+  // Reset the password on every seed so changing ADMIN_PASSWORD in the host
+  // panel and redeploying actually takes effect for the existing admin row.
   await prisma.user.upsert({
     where: { email: adminEmail },
-    update: { role: Role.ADMIN, name: adminName },
+    update: { role: Role.ADMIN, name: adminName, passwordHash },
     create: { email: adminEmail, passwordHash, role: Role.ADMIN, name: adminName },
   });
   console.log("\n========================================");
