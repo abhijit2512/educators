@@ -5,11 +5,6 @@ import { getSiteSettings } from "@/lib/settings";
 
 export const metadata = { title: "Coding and programming learning support" };
 
-const LANGUAGES = [
-  "Python", "JavaScript", "Java", "HTML", "CSS", "React", "Node.js",
-  "SQL", "PHP", "C", "C++", "GitHub & version control",
-];
-
 const SUPPORT_AREAS = [
   ["Concept tutoring", "One-to-one walk-throughs of language fundamentals, libraries and frameworks."],
   ["Debugging help", "We work through errors together so you understand the cause and the fix."],
@@ -23,6 +18,7 @@ const SUPPORT_AREAS = [
 
 export default async function CodingPage() {
   const s = await getSiteSettings();
+  const languages = (s.coding_languages || "").split("|").map((x) => x.trim()).filter(Boolean);
   return (
     <>
       <section className="relative overflow-hidden">
@@ -33,13 +29,9 @@ export default async function CodingPage() {
               Coding · Programming
             </span>
             <h1 className="mt-3 text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">
-              Coding and programming learning support
+              {s.coding_heading}
             </h1>
-            <p className="mt-5 max-w-2xl text-lg text-white/85">
-              We help students understand coding concepts, fix errors, improve programming logic,
-              review code, and learn how to approach technical tasks. Support is provided for
-              learning and guidance purposes only.
-            </p>
+            <p className="mt-5 max-w-2xl text-lg text-white/85">{s.coding_subheading}</p>
             <div className="mt-7 flex flex-wrap gap-3">
               <Link href="/contact?service=coding-and-programming" className="btn-primary">
                 Request coding help
@@ -57,7 +49,7 @@ export default async function CodingPage() {
             <h2 className="h2 mt-2">Popular languages and tools</h2>
           </div>
           <div className="mt-8 flex flex-wrap justify-center gap-2">
-            {LANGUAGES.map((l) => (
+            {languages.map((l) => (
               <span key={l} className="rounded-xl bg-white px-3 py-2 text-sm font-medium text-ink-900 ring-1 ring-slate-200">
                 {l}
               </span>
@@ -87,9 +79,7 @@ export default async function CodingPage() {
 
       <section className="section">
         <div className="container max-w-3xl">
-          <IntegrityBanner
-            text="All coding support is provided for educational guidance, tutoring, debugging, and learning purposes only. Students must understand, adapt, and submit their own work according to their institution’s academic integrity rules."
-          />
+          <IntegrityBanner text={s.coding_disclaimer} />
           <p className="mt-6 text-sm text-slate-600">{s.integrity_disclaimer}</p>
         </div>
       </section>

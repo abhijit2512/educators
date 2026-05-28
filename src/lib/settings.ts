@@ -1,6 +1,8 @@
 import { prisma } from "./prisma";
+import { EXTENDED_DEFAULTS } from "./content-defaults";
 
 const FALLBACKS: Record<string, string> = {
+  ...EXTENDED_DEFAULTS,
   business_name: process.env.BUSINESS_NAME ?? "Educators United Pvt Ltd",
   business_email: process.env.BUSINESS_EMAIL ?? "hello@educatorsunited.in",
   business_phone: process.env.BUSINESS_PHONE ?? "+44 0000 000000",

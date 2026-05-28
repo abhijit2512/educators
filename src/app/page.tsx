@@ -50,10 +50,9 @@ export default async function HomePage() {
             </Reveal>
             <Reveal delay={0.2}>
               <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-slate-600">
-                <Badge>1-to-1 mentors</Badge>
-                <Badge>UK academic standards</Badge>
-                <Badge>Confidential</Badge>
-                <Badge>Email & WhatsApp support</Badge>
+                {s.hero_badges.split("|").map((b) => b.trim()).filter(Boolean).map((b) => (
+                  <Badge key={b}>{b}</Badge>
+                ))}
               </div>
             </Reveal>
           </div>
@@ -128,14 +127,8 @@ export default async function HomePage() {
                   <span className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-white/90 ring-1 ring-white/20">
                     Coding · Programming
                   </span>
-                  <h2 className="mt-3 text-3xl font-bold sm:text-4xl">
-                    Coding and programming learning support
-                  </h2>
-                  <p className="mt-4 text-white/80">
-                    We help students understand coding concepts, fix errors, improve programming logic,
-                    review code, and learn how to approach technical tasks. Support is provided for
-                    learning and guidance purposes only.
-                  </p>
+                  <h2 className="mt-3 text-3xl font-bold sm:text-4xl">{s.home_coding_heading}</h2>
+                  <p className="mt-4 text-white/80">{s.home_coding_text}</p>
                   <div className="mt-6 flex flex-wrap gap-3">
                     <Link href="/services/coding-and-programming" className="btn-primary">Explore coding support</Link>
                     <Link href="/contact" className="btn-outline">Request coding help</Link>
@@ -265,10 +258,8 @@ export default async function HomePage() {
       <section className="section">
         <div className="container grid gap-8 lg:grid-cols-3">
           <div className="card lg:col-span-2 bg-gradient-to-br from-brand-600 to-accent-500 text-white">
-            <h2 className="text-3xl font-bold">Ready to start learning with a mentor?</h2>
-            <p className="mt-2 text-white/90">
-              Tell us what you need help with — we’ll respond within one working day.
-            </p>
+            <h2 className="text-3xl font-bold">{s.cta_heading}</h2>
+            <p className="mt-2 text-white/90">{s.cta_text}</p>
             <div className="mt-5 flex flex-wrap gap-3">
               <Link href="/contact" className="btn bg-white text-brand-700 hover:bg-brand-50">Request a Quote</Link>
               <Link href="/pricing" className="btn-outline">See pricing</Link>

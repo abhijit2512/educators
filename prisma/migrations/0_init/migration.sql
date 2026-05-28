@@ -119,6 +119,19 @@ CREATE TABLE `SamplePaper` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
+CREATE TABLE `FaqItem` (
+    `id` VARCHAR(191) NOT NULL,
+    `question` TEXT NOT NULL,
+    `answer` TEXT NOT NULL,
+    `visible` BOOLEAN NOT NULL DEFAULT true,
+    `order` INTEGER NOT NULL DEFAULT 0,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
 CREATE TABLE `Payment` (
     `id` VARCHAR(191) NOT NULL,
     `enquiryId` VARCHAR(191) NOT NULL,

@@ -6,6 +6,7 @@
  */
 import { PrismaClient, Role } from "@prisma/client";
 import bcrypt from "bcryptjs";
+import { EXTENDED_DEFAULTS, DEFAULT_FAQ } from "../src/lib/content-defaults";
 
 const prisma = new PrismaClient();
 
@@ -54,6 +55,7 @@ const DEFAULT_SETTINGS: Record<string, string> = {
     "We provide academic coaching, tutoring and learning support. We do not complete assessed work on behalf of students.",
   integrity_disclaimer:
     "We do not complete assessed work on behalf of students. All support is provided for learning, guidance, editing, tutoring, research-method support, coding explanation, debugging, and reference purposes only. Students remain responsible for understanding, adapting, and submitting their own work according to their institution’s academic integrity rules.",
+  ...EXTENDED_DEFAULTS,
 };
 
 const SERVICES = [
@@ -193,6 +195,18 @@ async function main() {
     console.log(`✓ ${SAMPLES.length} sample resources created`);
   } else {
     console.log(`✓ Samples already present (${sampleCount}) — skipped`);
+  }
+
+  // FAQ — only seed if empty so admin-managed FAQs are never duplicated.
+  const faqCount = await prisma.faqItem.count();
+  if (faqCount === 0) {
+    for (let i = 0; i < DEFAULT_FAQ.length; i++) {
+      const [question, answer] = DEFAULT_FAQ[i];
+      await prisma.faqItem.create({ data: { question, answer, order: i, visible: true } });
+    }
+    console.log(`✓ ${DEFAULT_FAQ.length} FAQ items created`);
+  } else {
+    console.log(`✓ FAQ already present (${faqCount}) — skipped`);
   }
 }
 

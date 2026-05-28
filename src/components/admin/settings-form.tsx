@@ -70,6 +70,16 @@ const GROUPS: Group[] = [
     fields: [
       { key: "hero_headline", label: "Hero headline" },
       { key: "hero_subheading", label: "Hero subheading", type: "textarea" },
+      { key: "hero_badges", label: "Hero badges (separate with | )" },
+    ],
+  },
+  {
+    title: "Homepage — coding highlight & closing CTA",
+    fields: [
+      { key: "home_coding_heading", label: "Coding section heading" },
+      { key: "home_coding_text", label: "Coding section text", type: "textarea" },
+      { key: "cta_heading", label: "Closing CTA heading" },
+      { key: "cta_text", label: "Closing CTA text", type: "textarea" },
     ],
   },
   {
@@ -101,10 +111,12 @@ const GROUPS: Group[] = [
   {
     title: "About page",
     fields: [
+      { key: "about_title", label: "Page title" },
       { key: "about_intro", label: "Intro paragraph", type: "textarea" },
       { key: "about_mission", label: "Our mission", type: "textarea" },
       { key: "about_approach", label: "Our approach", type: "textarea" },
       { key: "about_focus", label: "UK & international focus", type: "textarea" },
+      { key: "about_integrity_card", label: "Academic integrity card", type: "textarea" },
     ],
   },
   {
@@ -113,6 +125,15 @@ const GROUPS: Group[] = [
       { key: "services_intro", label: "Services page intro", type: "textarea" },
       { key: "pricing_intro", label: "Pricing page intro", type: "textarea" },
       { key: "pricing_note", label: "Pricing footnote", type: "textarea" },
+    ],
+  },
+  {
+    title: "Coding & programming page",
+    fields: [
+      { key: "coding_heading", label: "Heading" },
+      { key: "coding_subheading", label: "Subheading", type: "textarea" },
+      { key: "coding_languages", label: "Languages (separate with | )", type: "textarea" },
+      { key: "coding_disclaimer", label: "Disclaimer banner", type: "textarea" },
     ],
   },
   {

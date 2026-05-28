@@ -17,7 +17,7 @@ export function CrudList({
   fields,
 }: {
   title: string;
-  entity: "services" | "pricing" | "samples";
+  entity: "services" | "pricing" | "samples" | "faq";
   items: any[];
   fields: Field[];
 }) {
