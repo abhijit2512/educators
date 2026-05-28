@@ -2,7 +2,12 @@
 // Database: PostgreSQL (Supabase). Override DATABASE_URL via env.
 
 generator client {
-  provider = "prisma-client-js"
+  provider   = "prisma-client-js"
+  // LiteSpeed/Passenger-style hosts (Hostinger) suspend the Node process
+  // between requests; Prisma's default in-process "library" engine crashes on
+  // resume with "PANIC: timer has gone away". The binary engine runs the query
+  // engine out-of-process and survives suspension.
+  engineType = "binary"
 }
 
 datasource db {
