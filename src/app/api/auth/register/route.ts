@@ -8,7 +8,7 @@ const schema = z.object({
   name: z.string().min(2).max(120),
   email: z.string().email().max(180),
   password: z.string().min(8).max(200),
-  phone: z.string().max(40).optional(),
+  phone: z.string().min(6, "A valid mobile number is required").max(40),
   country: z.string().max(80).optional(),
   university: z.string().max(160).optional(),
   level: z.string().max(80).optional(),

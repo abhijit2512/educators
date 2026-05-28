@@ -55,7 +55,7 @@ export default function RegisterPage() {
             <input className="input" name="password" type="password" required minLength={8} />
           </div>
           <div className="grid gap-3 sm:grid-cols-2">
-            <div><label className="label">Phone</label><input className="input" name="phone" /></div>
+            <div><label className="label">Mobile number</label><input className="input" name="phone" type="tel" required minLength={6} placeholder="+44 …" /></div>
             <div><label className="label">Country</label><input className="input" name="country" placeholder="United Kingdom" /></div>
             <div><label className="label">University</label><input className="input" name="university" /></div>
             <div><label className="label">Level</label><input className="input" name="level" placeholder="Undergraduate / PG" /></div>

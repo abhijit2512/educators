@@ -11,6 +11,14 @@ const FALLBACKS: Record<string, string> = {
   hero_headline: "Ethical academic support for UK and international students",
   hero_subheading:
     "Tutoring, research-method coaching, coding guidance, proofreading and learning support — delivered by qualified subject mentors. We help you learn; you submit your own work.",
+  about_intro:
+    "We are an academic learning-support service for UK and international students. We provide tutoring, research-method coaching, data-analysis walk-throughs, coding learning support, proofreading and referencing guidance.",
+  about_mission:
+    "Help every student understand their subject and produce their own work confidently, ethically and to a high academic standard.",
+  about_approach:
+    "One-to-one mentor sessions, written feedback, walk-through tutorials and reference examples — adapted to the student’s level and goals.",
+  about_focus:
+    "Familiar with UK university conventions and international academic standards; comfortable working across all major referencing styles.",
   footer_text:
     "We provide academic coaching, tutoring and learning support. We do not complete assessed work on behalf of students.",
   integrity_disclaimer:

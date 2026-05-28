@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { sendMail } from "@/lib/mailer";
+import { sendWhatsApp } from "@/lib/notify";
 import { getSiteSettings } from "@/lib/settings";
 import { check as rateLimit, clientIp } from "@/lib/rate-limit";
 
@@ -82,9 +83,12 @@ export async function POST(req: Request) {
     },
   });
 
-  // Fire-and-forget emails
+  // Fire-and-forget notifications (email + optional WhatsApp). All of these
+  // no-op gracefully when their env vars aren't configured.
   const settings = await getSiteSettings();
   const adminEmail = process.env.ADMIN_EMAIL || settings.business_email;
+  const adminWhatsApp = (process.env.WHATSAPP_ADMIN_TO || settings.business_whatsapp || "").replace(/[^0-9]/g, "");
+
   Promise.all([
     sendMail({
       to: adminEmail,
@@ -96,7 +100,15 @@ export async function POST(req: Request) {
       subject: `We received your enquiry — ${settings.business_name}`,
       html: studentEmailHtml(settings.business_name, data),
     }),
-  ]).catch((err) => console.error("[enquiry] email error", err));
+    adminWhatsApp
+      ? sendWhatsApp(
+          adminWhatsApp,
+          `New enquiry on ${settings.business_name}\n` +
+            `Service: ${data.serviceSlug}\nName: ${data.name}\nEmail: ${data.email}\n` +
+            `Phone: ${data.phone || "—"}\nDeadline: ${data.deadline || "—"}`,
+        )
+      : Promise.resolve(),
+  ]).catch((err) => console.error("[enquiry] notification error", err));
 
   return NextResponse.json({ ok: true, id: enquiry.id });
 }

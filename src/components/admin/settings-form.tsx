@@ -59,6 +59,10 @@ const FIELDS: Array<{ key: string; label: string; type?: "text" | "textarea" | "
   { key: "business_address", label: "Address" },
   { key: "hero_headline", label: "Hero headline" },
   { key: "hero_subheading", label: "Hero subheading", type: "textarea" },
+  { key: "about_intro", label: "About — intro paragraph", type: "textarea" },
+  { key: "about_mission", label: "About — our mission", type: "textarea" },
+  { key: "about_approach", label: "About — our approach", type: "textarea" },
+  { key: "about_focus", label: "About — UK & international focus", type: "textarea" },
   { key: "footer_text", label: "Footer text", type: "textarea" },
   { key: "integrity_disclaimer", label: "Academic integrity disclaimer", type: "textarea" },
 ];
